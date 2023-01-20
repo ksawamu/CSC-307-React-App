@@ -7,7 +7,7 @@ app.use(express.json());
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
-// new
+//new
 const users = { 
    users_list :
    [
@@ -40,10 +40,26 @@ const users = {
 }
 //new
 
+// app.get('/users', (req, res) => {
+//     res.send(users);
+// });
+// new
 app.get('/users', (req, res) => {
-    res.send(users);
+    const name = req.query.name;
+    if (name != undefined){
+        let result = findUserByName(name);
+        result = {users_list: result};
+        res.send(result);
+    }
+    else{
+        res.send(users);
+    }
 });
 
+const findUserByName = (name) => { 
+    return users['users_list'].filter( (user) => user['name'] === name); 
+}
+//new
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
