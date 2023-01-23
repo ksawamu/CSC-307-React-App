@@ -88,6 +88,33 @@ function addUser(user){
     users['users_list'].push(user);
 }
 
+// DELETE method
+app.delete('/users/:id', (req, res) => {
+    //const id2 = id;
+    const id2 = req.params['id']; 
+    console.log(id2);
+    for (let i = 0; i < users.users_list.length; i++)
+    {
+        console.log(users.users_list[i].id);
+
+        if (users.users_list[i].id === id2)
+        {
+            deleteUser(i);
+            res.status(204).end();
+        }
+    }
+    res.status(404).end();
+    // const userToDelete = findUserById(id);
+    // deleteUser(userToDelete);
+    // res.status(200).end();
+});
+
+
+function deleteUser(index){
+    users['users_list'].splice(index, 1);
+}
+// end DELETE
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
